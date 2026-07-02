@@ -16,6 +16,33 @@ import LocalFooter from './local-footer';
 import Recent from './recent';
 import RecentFooter from './recent-footer';
 
+// --- NEW FREE BOTS COMPONENT ---
+const FreeBotsList = () => {
+    // Add your file names and titles here. 
+    // Make sure these XML files are uploaded into your public/xml/ folder!
+    const bots = [
+        { name: 'Martingale Bot', file: '/xml/martingale.xml', desc: 'Classic multiplier strategy.' },
+        { name: 'Trend Follower', file: '/xml/trend_follower.xml', desc: 'Follows major market movements.' },
+    ];
+
+    return (
+        <div style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            <h4 style={{ margin: '0 0 8px 0', color: '#333' }}>Available Free Strategies:</h4>
+            {bots.map((bot, index) => (
+                <div key={index} style={{ border: '1px solid #eee', padding: '12px', borderRadius: '8px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#fafafa' }}>
+                    <div>
+                        <strong style={{ display: 'block', color: '#333' }}>{bot.name}</strong>
+                        <small style={{ color: '#666' }}>{bot.desc}</small>
+                    </div>
+                    <a href={bot.file} download style={{ background: '#ff444f', color: '#fff', padding: '6px 12px', borderRadius: '4px', textDecoration: 'none', fontSize: '14px', fontWeight: 'bold' }}>
+                        Download XML
+                    </a>
+                </div>
+            ))}
+        </div>
+    );
+};
+
 const LoadModal: React.FC = observer(() => {
     const { load_modal, dashboard, google_drive } = useStore();
     const { is_google_drive_configured } = google_drive;
@@ -48,7 +75,6 @@ const LoadModal: React.FC = observer(() => {
                 onClickClose={() => {
                     setPreviewOnPopup(false);
                     toggleLoadModal();
-                    // Removed close event tracking as per V2 requirements
                 }}
                 height_offset='80px'
                 page_overlay
@@ -56,6 +82,9 @@ const LoadModal: React.FC = observer(() => {
                 <Tabs active_index={active_index} onTabItemClick={handleTabItemClick} top>
                     <div label={localize('Local')}>
                         <Local />
+                    </div>
+                    <div label={localize('Free Bots')}>
+                        <FreeBotsList />
                     </div>
                     {is_google_drive_configured && (
                         <div label='Google Drive'>
@@ -79,7 +108,6 @@ const LoadModal: React.FC = observer(() => {
             is_open={is_load_modal_open}
             toggleModal={() => {
                 toggleLoadModal();
-                // Removed close event tracking as per V2 requirements
             }}
             onEntered={onEntered}
             elements_to_ignore={[document.querySelector('.injectionDiv')]}
@@ -91,6 +119,9 @@ const LoadModal: React.FC = observer(() => {
                     </div>
                     <div label={localize('Local')}>
                         <Local />
+                    </div>
+                    <div label={localize('Free Bots')}>
+                        <FreeBotsList />
                     </div>
                     {is_google_drive_configured && (
                         <div label='Google Drive'>
@@ -114,3 +145,4 @@ const LoadModal: React.FC = observer(() => {
 });
 
 export default LoadModal;
+        
