@@ -3,6 +3,7 @@ import React from 'react';
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
 import { cleanupUrl, handleOAuthCallback } from '@/external/deriv-core';
 import ChunkLoader from '@/components/loader/chunk-loader';
+import { getDerivAppId } from '@/components/shared';
 import LocalStorageSyncWrapper from '@/components/localStorage-sync-wrapper';
 import RoutePromptDialog from '@/components/route-prompt-dialog';
 import { useAccountSwitching } from '@/hooks/useAccountSwitching';
@@ -82,7 +83,7 @@ function App() {
         const handleCallback = async () => {
             try {
                 const authInfo = await handleOAuthCallback(window.location.href, {
-                    clientId: process.env.NEXT_PUBLIC_DERIV_APP_ID || '',
+                    clientId: getDerivAppId(),
                     redirectUri: window.location.origin,
                     scopes: 'trade',
                 });
