@@ -92,6 +92,8 @@ export const getDebugServiceWorker = () => {
     return false;
 };
 
+export const getDerivAppId = () => process.env.NEXT_PUBLIC_DERIV_APP_ID || '';
+
 /**
  * Generates the OAuth login or sign-up URL using vendored deriv-core
  *
@@ -100,7 +102,7 @@ export const getDebugServiceWorker = () => {
  */
 export const generateOAuthURL = async (prompt?: string): Promise<string> => {
     try {
-        const clientId = process.env.NEXT_PUBLIC_DERIV_APP_ID;
+        const clientId = getDerivAppId();
         if (!clientId) return '';
 
         const config: AuthConfig = {

@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { observer } from 'mobx-react-lite';
-import { generateOAuthURL } from '@/components/shared';
+import { generateOAuthURL, getDerivAppId } from '@/components/shared';
 import Button from '@/components/shared_ui/button';
 import useActiveAccount from '@/hooks/api/account/useActiveAccount';
 import { useApiBase } from '@/hooks/useApiBase';
@@ -172,7 +172,7 @@ const AppHeader = observer(() => {
                 // Disable auth buttons until the OAuth app id is configured, so the
                 // click handlers (which would otherwise log "Failed to generate OAuth
                 // URL") never fire. The env-not-set toast explains why.
-                const isAuthConfigured = Boolean(process.env.NEXT_PUBLIC_DERIV_APP_ID);
+                const isAuthConfigured = Boolean(getDerivAppId());
                 return (
                     <div className='auth-actions'>
                         <Button tertiary disabled={!isAuthConfigured} onClick={handleLogin}>
